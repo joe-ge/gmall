@@ -6,6 +6,7 @@ import com.joe.gmall.pms.entity.Brand;
 import com.joe.gmall.pms.service.BrandService;
 import com.joe.gmall.to.CommonResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.joe.gmall.vo.PageInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;
@@ -17,11 +18,13 @@ import java.util.List;
 /**
  * 品牌功能Controller
  */
+
+@CrossOrigin
 @RestController
 @Api(tags = "PmsBrandController",description = "商品品牌管理")
 @RequestMapping("/brand")
 public class PmsBrandController {
-    @Reference
+    @Reference(version = "1.0")
     private BrandService brandService;
 
     @ApiOperation(value = "获取全部品牌列表")
@@ -69,11 +72,9 @@ public class PmsBrandController {
                             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         CommonResult commonResult = new CommonResult();
-
         //TODO 根据品牌名称分页获取品牌列表
-
-
-        return commonResult;
+        PageInfoVo brandVo = brandService.brandPageInfo(keyword, pageNum, pageSize);
+        return commonResult.success(brandVo);
     }
 
     @ApiOperation(value = "根据编号查询品牌信息")

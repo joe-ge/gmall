@@ -41,11 +41,13 @@
             <version>2.0.3</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-validator</artifactId>-->
-<!--            <version>5.4.0.Final</version>-->
-<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+                logback 整合logstash的jar包-->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>5.3</version>
+        </dependency>
 
     </dependencies>
 
