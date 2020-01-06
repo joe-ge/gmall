@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class PmsProductCategoryWithChildrenItem extends ProductCategory implements Serializable {
-    private List<ProductCategory> children;
+public class PmsProductCategoryWithChildrenItem extends ProductCategory {
+    private List<PmsProductCategoryWithChildrenItem> children;
 
 }

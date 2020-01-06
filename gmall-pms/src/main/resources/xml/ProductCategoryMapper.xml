@@ -20,8 +20,7 @@
 
     <resultMap id="Product_Category_With_Children" type="com.joe.gmall.vo.product.PmsProductCategoryWithChildrenItem"
         extends="BaseResultMap">
-        <collection property="children" select="listProductCategoryWithChildren" column="id"></collection>
-<!--                    resultMap="Product_Category_With_Children" />-->
+        <collection property="children" select="listProductCategoryWithChildren" column="id"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
