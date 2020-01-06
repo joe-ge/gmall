@@ -42,7 +42,7 @@ applied to the classpath.
 
 5.编写切面
 
-[校验切面]: gmall-admin-web/src/main/java/com/joe/gmall/admin/aop/DataValidAspect.java "校验切面"
+[校验切面](gmall-admin-web/src/main/java/com/joe/gmall/admin/aop/DataValidAspect.java "校验切面") 
 
 (1)导入切面场景
 
@@ -68,5 +68,5 @@ applied to the classpath.
 
 6.全局异常处理
 
-[异常处理]: gmall-admin-web/src/main/java/com/joe/gmall/admin/aop/GlobalExceptionHandler.java "异常处理"
+[异常处理](gmall-admin-web/src/main/java/com/joe/gmall/admin/aop/GlobalExceptionHandler.java "异常处理")
 
