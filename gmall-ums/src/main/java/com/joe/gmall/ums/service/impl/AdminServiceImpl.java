@@ -19,24 +19,21 @@ import org.springframework.util.DigestUtils;
  * @since 2020-01-05
  */
 @Component
-@Service
+@Service(version = "1.0")
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
-
-    @Autowired
-    AdminMapper adminMapper;
 
     @Override
     public Admin login(String username, String password) {
 
         String passwdmd5 = DigestUtils.md5DigestAsHex(password.getBytes());
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<Admin>().eq("username", username).eq("password", passwdmd5);
-        Admin admin = adminMapper.selectOne(queryWrapper);
+        Admin admin = baseMapper.selectOne(queryWrapper);
         return admin;
     }
 
 
     @Override
     public Admin getUserInfo(String userName) {
-        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",userName));
+        return baseMapper.selectOne(new QueryWrapper<Admin>().eq("username",userName));
     }
 }
