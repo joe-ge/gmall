@@ -1,5 +1,5 @@
 # gmal电商项目
-SpringBoot集成
+##SpringBoot集成
 
 ###1.devtool与dubbobu不兼容，反序列化的结果会出现类匹配异常。
 
