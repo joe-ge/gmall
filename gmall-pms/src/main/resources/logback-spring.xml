@@ -28,4 +28,7 @@
         <appender-ref ref="FILE"/>
         <appender-ref ref="LOGSTASH"/>
     </root>
+    <logger level="debug" name="com.joe.gmall" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
 </configuration>
