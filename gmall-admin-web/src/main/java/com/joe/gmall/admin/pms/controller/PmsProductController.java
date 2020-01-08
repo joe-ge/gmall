@@ -37,7 +37,7 @@ public class PmsProductController {
         //TODO 查询所有一级分类及子分类
         log.debug("将要保存的商品信息：{}",productParam);
         boolean result = productService.saveProduct(productParam);
-        return new CommonResult().success(null);
+        return new CommonResult().success(result);
     }
 
     @ApiOperation("根据商品id获取商品编辑信息")

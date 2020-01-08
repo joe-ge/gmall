@@ -1,7 +1,7 @@
 # gmal电商项目
 SpringBoot集成
 
-1.devtool与dubbobu不兼容，反序列化的结果会出现类匹配异常。
+1.devtool与dubbo不兼容，反序列化的结果会出现类匹配异常。
 
 官方文档：
 
@@ -129,3 +129,43 @@ xml配置文件中，记得在启动类上添加@ImportResource(locations = "cla
             <dubbo:method name="saveProduct" timeout="2000" retries="0"></dubbo:method>
         </dubbo:reference>
     </beans>
+    
+11.ThreadLocal的使用:在多线程中保存各自线程中的共享变量，相当于
+Map<Thread,T> map;使用当前线程(Thread.currentThread())作为key.
+
+12.Transaction的使用：
+
+（1）注解类上开启@EnableTransactionManagement
+
+（2）
+
+        @Transactional(propagation = Propagation.REQUIRED,
+               rollbackFor = Exception.class ,/*By default, a transaction will be rolling back on {@link RuntimeException}
+                                                and {@link Error} but not on checked exceptions (business exceptions)
+                                                公司一般都指定为Exception.class */
+               noRollbackFor = FileNotFoundException.class /*指定可回滚中的不回滚情景 */
+       )       
+（3）Demo的内部事务无法真正的实现，原因：jvm在编译时就直接回把B,C方法粘贴到A方法里面去了，不管里面的事务为何种传播行为，他们统一用的事务都外面那个。总结：对象.方法()才可以加上事务。
+
+    public class DemoA{
+         @Transactional
+         methodA(){
+             methodB();
+             methodC();
+         }
+         @Transactional
+         methodB(){};
+         @Transactional
+         methodC(){};
+    }
+最终解决办法：Spring给出的办法是aop代理自个对象。
+
+使用：
+
+①导入spring-boot-starter-aop
+
+②启动类上开启暴露代理对象`@EnableAspectJAutoProxy(exposeProxy = true) `
+
+③在类中使用`ProductServiceImpl proxy = (ProductServiceImpl) AopContext.currentProxy();`
+
+[详见](gmall-pms/src/main/java/com/joe/gmall/pms/service/impl/ProductServiceImpl.java)
