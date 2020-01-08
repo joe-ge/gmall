@@ -1,12 +1,10 @@
 package com.joe.gmall.admin.pms.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.joe.gmall.admin.pms.vo.PmsBrandParam;
-import com.joe.gmall.pms.entity.Brand;
 import com.joe.gmall.pms.service.BrandService;
 import com.joe.gmall.to.CommonResult;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joe.gmall.vo.PageInfoVo;
+import com.joe.gmall.vo.product.PmsBrandParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;

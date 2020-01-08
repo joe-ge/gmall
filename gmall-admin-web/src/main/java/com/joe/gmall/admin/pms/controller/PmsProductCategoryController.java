@@ -1,14 +1,12 @@
 package com.joe.gmall.admin.pms.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.joe.gmall.admin.pms.vo.PmsProductCategoryParam;
 import com.joe.gmall.pms.service.ProductCategoryService;
 import com.joe.gmall.to.CommonResult;
+import com.joe.gmall.vo.product.PmsProductCategoryParam;
 import com.joe.gmall.vo.product.PmsProductCategoryWithChildrenItem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,7 @@ import java.util.List;
 @Api(tags = "PmsProductCategoryController", description = "商品分类管理")
 @RequestMapping("/productCategory")
 public class PmsProductCategoryController {
-    @Reference(version = "1.0")
+    @Reference(version = "1.0" )
     private ProductCategoryService productCategoryService;
 
     @ApiOperation("添加产品分类")

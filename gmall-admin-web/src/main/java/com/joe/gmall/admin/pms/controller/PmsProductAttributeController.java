@@ -1,11 +1,10 @@
 package com.joe.gmall.admin.pms.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.joe.gmall.admin.pms.vo.PmsProductAttributeParam;
-import com.joe.gmall.pms.entity.ProductAttribute;
 import com.joe.gmall.pms.service.ProductAttributeService;
 import com.joe.gmall.to.CommonResult;
 import com.joe.gmall.vo.PageInfoVo;
+import com.joe.gmall.vo.product.PmsProductAttributeParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

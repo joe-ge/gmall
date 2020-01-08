@@ -3,6 +3,7 @@ package com.joe.gmall.pms.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joe.gmall.pms.entity.Product;
 import com.joe.gmall.vo.PageInfoVo;
+import com.joe.gmall.vo.product.PmsProductParam;
 import com.joe.gmall.vo.product.PmsProductQueryParam;
 
 /**
@@ -21,4 +22,11 @@ public interface ProductService extends IService<Product> {
      * @return
      */
     PageInfoVo productPageInfo(PmsProductQueryParam param);
+
+    /**
+     * 保存商品信息
+     * @param productParam
+     * @return
+     */
+    boolean saveProduct(PmsProductParam productParam);
 }

@@ -95,3 +95,37 @@ key中拼接：`@Cacheable(cacheNames = SysCacheConstant.MENU_CACHE_NAME,key = S
         return config;
     }
 
+9.oss对象存储&阿里云跨域访问
+
+10.dubbo针对某个服务或者某个方法单独配置超时时间和重试次数
+
+注解中：（注意：用了注解之后，不管有没有在注解中自定义配置，下面其它的配置的都不生效）
+
+    @Reference(version = "1.0" ,parameters = {
+            "saveProduct.timeout","5000",
+            "saveProduct.retries","0"
+    })
+    private ProductService productService;
+
+properties中：
+
+`dubbo.reference.com.joe.gmall.pms.service.saveProduct.saveProduct.timeout=5000`
+`dubbo.reference.com.joe.gmall.pms.service.saveProduct.saveProduct.retries=0`
+
+xml配置文件中，记得在启动类上添加@ImportResource(locations = "classpath:dubbo-consumer.xml")
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+    <!--    <dubbo:application name="gmall-admin-web" />-->
+    <!--    <dubbo:registry protocol="zookeeper" address="zookeeper://zk.registry.com:2181" />-->
+    <!--    <dubbo:protocol name="dubbo" port="20895" />-->
+        <dubbo:reference interface="com.joe.gmall.pms.service.saveProduct" id="productService">
+            <dubbo:method name="saveProduct" timeout="2000" retries="0"></dubbo:method>
+        </dubbo:reference>
+    </beans>
