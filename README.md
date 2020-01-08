@@ -145,7 +145,7 @@ Map<Thread,T> map;使用当前线程(Thread.currentThread())作为key.
                                                 公司一般都指定为Exception.class */
                noRollbackFor = FileNotFoundException.class /*指定可回滚中的不回滚情景 */
        )       
-（3）Demo的内部事务无法真正的实现，原因：jvm在编译时就直接回把B,C方法粘贴到A方法里面去了，不管里面的事务为何种传播行为，他们统一用的事务都外面那个。总结：对象.方法()才可以加上事务。
+（3）Demo的内部事务无法真正的实现，原因：事务是基于aop的，然而这种写法A,B,C都是同一个代理对象，不管里面的事务为何种传播行为，他们统一用的事务都外面那个。总结：代理对象.方法()才可以加上事务。
 
     public class DemoA{
          @Transactional
