@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+<!--  该配置文件并未生效，仅作参考  -->
+<!--    <dubbo:application name="gmall-admin-web" />-->
+<!--    <dubbo:registry protocol="zookeeper" address="zookeeper://zk.registry.com:2181" />-->
+<!--    <dubbo:protocol name="dubbo" port="20895" />-->
+    <dubbo:reference interface="com.joe.gmall.pms.service.ProductService" id="productService">
+        <dubbo:method name="saveProduct" timeout="5000" retries="0"></dubbo:method>
+    </dubbo:reference>
+</beans>
