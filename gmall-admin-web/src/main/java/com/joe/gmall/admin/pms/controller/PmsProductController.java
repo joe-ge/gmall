@@ -25,9 +25,10 @@ import java.util.List;
 @RequestMapping("/product")
 public class PmsProductController {
     @Reference(version = "1.0" ,parameters = {
-            "saveProduct.timeout","5000",
-            "saveProduct.retries","0"
-    })
+            "saveProduct.timeout","3000",
+            "saveProduct.retries","0",
+            "updatePublishStatus.timeout","5000",
+            "updatePublishStatus.retries","0"})
     private ProductService productService;
 
     @ApiOperation("创建商品")
@@ -86,6 +87,7 @@ public class PmsProductController {
     public Object updatePublishStatus(@RequestParam("ids") List<Long> ids,
                                      @RequestParam("publishStatus") Integer publishStatus) {
         //TODO 批量上下架
+        productService.updatePublishStatus(ids, publishStatus);
         return new CommonResult().success(null);
     }
 
