@@ -19,10 +19,11 @@ import com.joe.gmall.vo.PageInfoVo;
 import com.joe.gmall.vo.product.PmsProductParam;
 import com.joe.gmall.vo.product.PmsProductQueryParam;
 import io.searchbox.client.JestClient;
-import io.searchbox.core.Delete;
-import io.searchbox.core.DocumentResult;
-import io.searchbox.core.Index;
+import io.searchbox.core.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.search.join.ScoreMode;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -222,6 +223,55 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         }
     }
 
+    @Override
+    public EsProduct productAllInfo(Long id) {
+        EsProduct esProduct = null;
+
+        SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
+        searchBuilder.query(QueryBuilders.termQuery("id", id));
+
+        Search search = new Search.Builder(searchBuilder.toString())
+                .addIndex(EsConstant.PRODUCT_ES_INDEX)
+                .addType(EsConstant.PRODUCT_INFO_ES_TYPE)
+                .build();
+
+        try {
+            SearchResult searchResult = jestClient.execute(search);
+            List<SearchResult.Hit<EsProduct, Void>> hits = searchResult.getHits(EsProduct.class);
+            if (hits.size() > 0 ) {
+                esProduct = hits.get(0).source;
+            }
+        } catch (IOException e) {
+            log.error("商品id{}查询失败:{}{}",id,e.getMessage(),e.getStackTrace());
+        }
+        return esProduct;
+    }
+
+    @Override
+    public EsProduct productSkuInfo(Long id) {
+        EsProduct esProduct = null;
+
+        SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
+        searchBuilder.query(QueryBuilders.nestedQuery("skuProductInfos",
+                QueryBuilders.termQuery("skuProductInfos.id",id),
+                ScoreMode.None));
+
+        Search search = new Search.Builder(searchBuilder.toString())
+                .addIndex(EsConstant.PRODUCT_ES_INDEX)
+                .addType(EsConstant.PRODUCT_INFO_ES_TYPE)
+                .build();
+
+        try {
+            SearchResult searchResult = jestClient.execute(search);
+            List<SearchResult.Hit<EsProduct, Void>> hits = searchResult.getHits(EsProduct.class);
+            if (hits.size() > 0 ) {
+                esProduct = hits.get(0).source;
+            }
+        } catch (IOException e) {
+            log.error("商品id{}查询失败:{}{}",id,e.getMessage(),e.getStackTrace());
+        }
+        return esProduct;
+    }
     private void setProductPublishStatus(Integer publishStatus, Long id) {
         //bean应该都用包装类
         Product product = new Product();
@@ -342,5 +392,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             //deleteProductFromEs(id);
         }
     }
+
 
 }

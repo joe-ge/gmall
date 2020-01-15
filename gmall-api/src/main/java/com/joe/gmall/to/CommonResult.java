@@ -45,6 +45,15 @@ public class CommonResult {
     }
 
     /**
+     * 普通失败提示信息
+     */
+    public CommonResult failed(String message) {
+        this.code = FAILED;
+        this.message = message;
+        return this;
+    }
+
+    /**
      * 参数验证失败使用
      *
      * @param message 错误信息

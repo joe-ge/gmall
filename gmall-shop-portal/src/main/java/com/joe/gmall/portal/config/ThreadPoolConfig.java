@@ -1,11 +1,13 @@
 package com.joe.gmall.portal.config;
 
 import com.joe.gmall.portal.config.properties.ThreadPoolProperties;
+import lombok.Getter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +38,7 @@ public class ThreadPoolConfig {
     public ThreadPoolExecutor mainThreadPoolExecutor(){
         LinkedBlockingDeque<Runnable> linkedBlockingDeque = new LinkedBlockingDeque<>(queueSize);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize,maximumPoolSize,
-                10,TimeUnit.MINUTES,linkedBlockingDeque);
+                keepAliveTime.toMinutes(),TimeUnit.MINUTES,linkedBlockingDeque);
         return threadPoolExecutor;
     }
 
@@ -44,7 +46,7 @@ public class ThreadPoolConfig {
     public ThreadPoolExecutor otherThreadPoolExecutor(){
         LinkedBlockingDeque<Runnable> linkedBlockingDeque = new LinkedBlockingDeque<>(queueSize);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize,maximumPoolSize,
-                10,TimeUnit.MINUTES,linkedBlockingDeque);
+                keepAliveTime.toMinutes(),TimeUnit.MINUTES,linkedBlockingDeque);
         return threadPoolExecutor;
     }
 
